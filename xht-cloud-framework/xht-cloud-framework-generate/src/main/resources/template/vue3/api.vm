@@ -1,0 +1,92 @@
+/**
+ * <h1>${tableComment}</h1>
+ *
+ * @author : ${author}
+ **/
+import request from '@/utils/http/request'
+import {RequestEnum} from '@/common/enum/httpEnum'
+import {${className}} from '${typesPackage}'
+
+const baseURL = import.meta.env.VITE_APP_XHT_CLOUD_PREFIX;
+
+/**
+ * 保存/添加${tableComment}
+ * @param data 数据
+ * @returns {*}
+ */
+export const save${className} = (data: ${className}.AddUpdateForm) => {
+    return request({
+        baseURL,
+        url: '${url}',
+        method: RequestEnum.POST,
+        headers: {
+            repeatSubmit: true
+        },
+        data: data
+    })
+}
+
+/**
+ * 根据id删除${tableComment}
+ * @param ids
+ * @returns {*}
+ */
+export const delete${className}ById = (ids: any[]) => {
+    return request({
+        baseURL,
+        url: '${url}',
+        method: RequestEnum.DELETE,
+        headers: {
+            repeatSubmit: true
+        },
+        data: ids
+    })
+}
+
+/**
+ * 修改${tableComment}
+ * @param data 数据
+ * @returns {*}
+ */
+export const update${className} = (data: ${className}.AddUpdateForm) => {
+    return request({
+        baseURL,
+        url: '${url}',
+        method: RequestEnum.PUT,
+        headers: {
+            repeatSubmit: true
+        },
+        data: data
+    })
+}
+
+/**
+ * 根据Id查询${tableComment}
+ * @param id id
+ * @returns {*}
+ */
+export const get${className}ById = (id: string) => {
+    return request({
+        baseURL,
+        url: `${url}/${id}`,
+        method: RequestEnum.GET,
+        headers: {
+        },
+    })
+}
+
+/**
+ * 分页查询${tableComment}
+ * @param data 数据
+ * @returns {*}
+ */
+export const get${className}Page = (data: ${className}.QueryFrom) => {
+    return request({
+        baseURL,
+        url: '${url}',
+        method: RequestEnum.GET,
+        headers: {
+        },
+        params: data
+    })
+}

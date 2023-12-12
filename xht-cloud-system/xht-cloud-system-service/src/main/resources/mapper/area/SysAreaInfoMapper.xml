@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.system.module.area.dao.mapper.SysAreaInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.system.module.area.dao.dataobject.SysAreaInfoDO">
+        <result column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="level" property="level" />
+        <result column="area_no" property="areaNo" />
+        <result column="category" property="category" />
+        <result column="msg" property="msg" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="leaf" property="leaf"/>
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        parent_id,
+        name,
+        level,
+        area_no,
+        category,
+        msg,
+        create_by,
+        update_by,
+        create_time,
+        update_time
+    </sql>
+    <select id="selectListByRequest" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumnList"></include>
+        , ( select count(1) from sys_area_info t1 where t1.parent_id = sys_area_info.id ) as leaf
+        FROM sys_area_info
+        WHERE del_flag=0
+        <if test=" parentId != null and parentId != '' ">
+            and parent_id = #{parentId}
+        </if>
+        <if test=" name != null and name != '' ">
+            and name like concat('%',#{name},'%')
+        </if>
+        <if test=" areaNo != null and areaNo != '' ">
+            and area_no like concat('%',#{areaNo},'%')
+        </if>
+    </select>
+
+</mapper>

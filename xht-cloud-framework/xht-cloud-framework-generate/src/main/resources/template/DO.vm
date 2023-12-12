@@ -1,0 +1,29 @@
+package ${packageName};
+
+#foreach($pkg in ${importClassNames})
+${pkg}
+#end
+
+/**
+ * 描述 ：${tableComment}
+ *
+ * @author : ${author}
+ **/
+@Data
+@TableName(value = "${tableName}")
+public class ${className}DO extends BaseDO {
+
+#foreach ($column in ${columns})
+    /**
+     * ${column.describe}
+     */
+#if(${column.columnName} == ${pkColumn.columnName})
+    @TableId(value = "${column.columnNameDb}", type = IdType.ASSIGN_ID)
+#end
+#if(${column.pk} == '0')
+    @TableField(value = "${column.columnNameDb}")
+#end
+    private ${column.javaType} ${column.columnName};
+
+#end
+}

@@ -1,0 +1,85 @@
+package com.xht.cloud.file.oss.demo;
+
+import com.alibaba.fastjson.JSON;
+import com.xht.cloud.file.oss.repository.MinioFileRepository;
+import com.xht.cloud.file.oss.service.MinioOssTemplate;
+import com.xht.cloud.framework.file.MinIoProperties;
+import com.xht.cloud.framework.file.oss.core.OssBucketOperations;
+import com.xht.cloud.framework.file.oss.dto.BucketDTO;
+import com.xht.cloud.framework.file.oss.dto.cmd.CreateBucketCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.DeleteBucketCmd;
+import io.minio.MinioClient;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+
+/**
+ * 描述 ：
+ *
+ * @author : 小糊涂
+ **/
+@Slf4j
+public class OssBucketOperationsTest {
+    private static final MinIoProperties minIoProperties = new MinIoProperties();
+    private static final OssBucketOperations minioOssTemplate;
+
+    static {
+        minIoProperties.setHost("http://192.168.100.100:9090");
+        minIoProperties.setAccessKey("root");
+        minIoProperties.setSecretKey("123456789");
+        minIoProperties.setBucketName("test");
+        MinioClient minioClient = MinioClient.builder()
+                .endpoint(minIoProperties.getHost())
+                .credentials(minIoProperties.getAccessKey(), minIoProperties.getSecretKey())
+                .build();
+        minioOssTemplate = new MinioOssTemplate(new MinioFileRepository(minioClient));
+    }
+
+
+    public void listBuckets() {
+        log.info("--------------------{}-{}----------------------", "查询所有存储桶", "start");
+        List<BucketDTO> bucketDTOS = minioOssTemplate.listBuckets();
+        for (BucketDTO bucketDTO : bucketDTOS) {
+            System.out.println(JSON.toJSONString(bucketDTO));
+        }
+        log.info("--------------------{}-{}----------------------", "查询所有存储桶", "end");
+    }
+
+
+    public void doesBucketExist() {
+        String bucketName = "test";
+        log.info("-------------------{}-{}-{}----------------------", bucketName, "存储桶是否存在", minioOssTemplate.doesBucketExist(bucketName));
+
+    }
+
+
+    public void createBucket() {
+        String bucketName = "test2";
+        log.info("-------------------{}-`{}`-{}----------------------", "创建存储桶", bucketName, minioOssTemplate.createBucket(bucketName));
+    }
+
+
+    public void createBucket2() {
+        String bucketName = "test3";
+        CreateBucketCmd build = CreateBucketCmd.builder().bucketName(bucketName).region("123456").build();
+        log.info("-------------------{}-`{}`-{}----------------------", "创建存储桶", bucketName, minioOssTemplate.createBucket(build));
+    }
+
+
+    public void deleteBucket() {
+        String bucketName = "test2";
+        log.info("-------------------{}-`{}`-{}----------------------", "删除存储桶", bucketName, "start");
+        minioOssTemplate.deleteBucket(bucketName);
+        log.info("-------------------{}-`{}`-{}----------------------", "删除存储桶", bucketName, "end");
+    }
+
+    public void deleteBucket2() {
+        String bucketName = "test3";
+        log.info("-------------------{}-`{}`-{}----------------------", "删除存储桶", bucketName, "start");
+        DeleteBucketCmd build = DeleteBucketCmd.builder().bucketName(bucketName).region("123456").build();
+        minioOssTemplate.deleteBucket(build);
+        log.info("-------------------{}-`{}`-{}----------------------", "删除存储桶", bucketName, "end");
+    }
+
+
+}

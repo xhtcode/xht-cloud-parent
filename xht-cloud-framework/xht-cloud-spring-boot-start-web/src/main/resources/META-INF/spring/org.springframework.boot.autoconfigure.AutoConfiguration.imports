@@ -1,0 +1,4 @@
+com.xht.cloud.framework.web.handler.DefaultGlobalExceptionHandler
+com.xht.cloud.framework.web.jackson.JacksonConfiguration
+com.xht.cloud.framework.web.doc.SwaggerProperties
+com.xht.cloud.framework.web.doc.SpringDocConfig

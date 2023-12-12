@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.system.module.poetry.dao.mapper.SysDictPoetryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.system.module.poetry.dao.dataobject.SysDictPoetryDO">
+        <result column="id" property="id" />
+        <result column="author" property="author" />
+        <result column="author_desc" property="authorDesc" />
+        <result column="type" property="type" />
+        <result column="type_desc" property="typeDesc" />
+        <result column="title" property="title" />
+        <result column="tilte_desc" property="tilteDesc" />
+        <result column="context" property="context" />
+        <result column="context_desc" property="contextDesc" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        author,
+        author_desc,
+        type,
+        type_desc,
+        title,
+        tilte_desc,
+        context,
+        context_desc
+    </sql>
+
+</mapper>

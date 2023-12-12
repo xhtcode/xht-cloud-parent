@@ -1,0 +1,27 @@
+server:
+  port: 80
+spring:
+  application:
+    name: xht-cloud-gateway
+  profiles:
+    active: @profiles.active@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: @nacos.server-addr@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+      config:
+        server-addr: @nacos.server-addr@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+        file-extension: yml
+        prefix: ${spring.application.name} # 默认配置
+
+
+
+

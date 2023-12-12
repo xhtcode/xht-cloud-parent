@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.xht.cloud</groupId>
+    <artifactId>xht-cloud-framework</artifactId>
+    <version>2023</version>
+    <packaging>pom</packaging>
+    <description>公共组件jar 管理</description>
+    <modules>
+        <module>xht-cloud-framework-core</module>
+        <module>xht-cloud-spring-boot-start-mybatis</module>
+        <module>xht-cloud-framework-generate</module>
+        <module>xht-cloud-spring-boot-start-web</module>
+        <module>xht-cloud-spring-boot-start-log</module>
+        <module>xht-cloud-spring-boot-start-security</module>
+        <module>xht-cloud-spring-boot-start-redis</module>
+        <module>xht-cloud-spring-boot-start-safety</module>
+        <module>xht-cloud-spring-boot-start-rpc</module>
+        <module>xht-cloud-framework-file</module>
+        <module>xht-cloud-framework-exception</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.plugin.version>3.8.1</maven.plugin.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!--自己的项目依赖-->
+            <dependency>
+                <groupId>com.xht.cloud</groupId>
+                <artifactId>xht-cloud-dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <!-- 以下依赖 全局所有的模块都会引入  -->
+    <dependencies>
+        <!--Lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope><!-- 设置为 provided，只有工具类需要使用到 -->
+        </dependency>
+        <!-- 日志框架整合 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <!-- 设置构建的 jar 包名 -->
+        <finalName>${project.artifactId}</finalName>
+    </build>
+</project>

@@ -1,0 +1,2 @@
+com.xht.cloud.framework.mybatis.MybatisAutoConfiguration
+com.xht.cloud.framework.mybatis.handler.DataScopeFactory

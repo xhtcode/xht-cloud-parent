@@ -1,0 +1,2 @@
+com.xht.cloud.framework.log.LogAutoConfig
+com.xht.cloud.framework.log.aspect.SysLogAspect

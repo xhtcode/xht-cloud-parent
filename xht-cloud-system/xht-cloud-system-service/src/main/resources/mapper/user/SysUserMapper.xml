@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xht.cloud.system.module.user.dao.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xht.cloud.system.module.user.dao.dataobject.SysUserDO">
+        <result column="id" property="id" />
+        <result column="nick_name" property="nickName" />
+        <result column="user_name" property="userName" />
+        <result column="pass_word" property="passWord" />
+        <result column="pass_word_salt" property="passWordSalt" />
+        <result column="pass_word_old" property="passWordOld" />
+        <result column="pass_word_salt_old" property="passWordSaltOld" />
+        <result column="dept_id" property="deptId" />
+        <result column="user_avatar" property="userAvatar" />
+        <result column="user_type" property="userType" />
+        <result column="qq_openid" property="qqOpenid" />
+        <result column="wx_openid" property="wxOpenid" />
+        <result column="wx_unionid" property="wxUnionid" />
+        <result column="is_lock" property="isLock" />
+        <result column="is_active" property="isActive" />
+        <result column="is_admin" property="isAdmin" />
+        <result column="registered_time" property="registeredTime" />
+        <result column="last_login_time" property="lastLoginTime" />
+        <result column="del_flag" property="delFlag" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        id,
+        nick_name,
+        user_name,
+        pass_word,
+        pass_word_salt,
+        pass_word_old,
+        pass_word_salt_old,
+        dept_id,
+        user_avatar,
+        user_type,
+        qq_openid,
+        wx_openid,
+        wx_unionid,
+        is_lock,
+        is_active,
+        is_admin,
+        registered_time,
+        last_login_time,
+        del_flag,
+        create_time,
+        create_by,
+        update_time,
+        update_by
+    </sql>
+
+</mapper>

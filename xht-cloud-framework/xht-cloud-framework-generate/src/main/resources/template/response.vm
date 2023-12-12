@@ -1,0 +1,24 @@
+package ${packageName};
+
+#foreach($pkg in ${importClassNames})
+${pkg}
+#end
+
+/**
+ * 描述 ：${tableComment}
+ *
+ * @author : ${author}
+ **/
+@Data
+@Schema(name = "${className}Response(${tableComment}-响应信息)", description = "${tableComment}")
+public class ${className}Response ${response}{
+
+#foreach ($column in ${columns})
+    /**
+     * ${column.describe}
+     */
+    @Schema(description = "${column.describe}")
+    private ${column.javaType} ${column.columnName};
+
+#end
+}

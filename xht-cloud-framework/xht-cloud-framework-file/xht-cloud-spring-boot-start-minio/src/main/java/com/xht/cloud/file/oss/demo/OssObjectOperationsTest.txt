@@ -1,0 +1,282 @@
+package com.xht.cloud.file.oss.demo;
+
+import cn.hutool.core.io.FileUtil;
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.xht.cloud.file.oss.repository.MinioFileRepository;
+import com.xht.cloud.file.oss.service.MinioOssTemplate;
+import com.xht.cloud.framework.file.MinIoProperties;
+import com.xht.cloud.framework.file.core.enums.ContentType;
+import com.xht.cloud.framework.file.oss.core.OssObjectOperations;
+import com.xht.cloud.framework.file.oss.dto.GetObjectDTO;
+import com.xht.cloud.framework.file.oss.dto.ListObjectsDTO;
+import com.xht.cloud.framework.file.oss.dto.ObjectsDTO;
+import com.xht.cloud.framework.file.oss.dto.PutObjectDTO;
+import com.xht.cloud.framework.file.oss.dto.StatObjectDTO;
+import com.xht.cloud.framework.file.oss.dto.UploadObjectDTO;
+import com.xht.cloud.framework.file.oss.dto.cmd.DeleteObjectCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.DeleteObjectsCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.DeleteObjectsItemCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.DownloadObjectCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.GetObjectCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.GetPreSignedObjectUrlCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.GetStatObjectCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.ListObjectCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.PutObjectCmd;
+import com.xht.cloud.framework.file.oss.dto.cmd.UploadObjectCmd;
+import io.minio.MinioClient;
+import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.springframework.http.HttpMethod;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 描述 ：
+ *
+ * @author : 小糊涂
+ **/
+@Slf4j
+public class OssObjectOperationsTest {
+    private static final MinIoProperties minIoProperties = new MinIoProperties();
+    private static final OssObjectOperations minioOssTemplate;
+
+    private static final String bucketName = "test3";
+
+    static {
+        minIoProperties.setHost("http://192.168.100.100:9090");
+        minIoProperties.setAccessKey("root");
+        minIoProperties.setSecretKey("123456789");
+        minIoProperties.setBucketName(bucketName);
+        MinioClient minioClient = MinioClient.builder()
+                .endpoint(minIoProperties.getHost())
+                .credentials(minIoProperties.getAccessKey(), minIoProperties.getSecretKey())
+                .build();
+        minioOssTemplate = new MinioOssTemplate(new MinioFileRepository(minioClient));
+    }
+
+
+    /**
+     * listObjects列出桶里面的对象信息
+     */
+
+    public void listObjects() {
+        log.info("--------------------{}-`{}`-{}----------------------", "listObjects列出桶里面的对象信息", "listObjects", "start");
+        ListObjectCmd objectCmd = new ListObjectCmd();
+        objectCmd.setBucketName(bucketName);
+        objectCmd.setRegion("");
+        objectCmd.setDelimiter("");
+        objectCmd.setRecursive(false);
+        objectCmd.setUseUrlEncodingType(true);
+        objectCmd.setMaxKeys(1000);
+     //   listObjectCmd.setPrefix("关键字");
+        objectCmd.setUseApiVersion1(false);
+     //   listObjectCmd.setMarker("关键字");
+        objectCmd.setExtraHeaders(Maps.newHashMap());
+        objectCmd.setExtraQueryParams(Maps.newHashMap());
+        ListObjectsDTO objectsDTO = minioOssTemplate.listObjects(objectCmd);
+        System.out.println(JSON.toJSONString(objectsDTO));
+        List<ObjectsDTO> summaries = objectsDTO.getSummaries();
+        for (ObjectsDTO summary : summaries) {
+            System.out.println(JSON.toJSONString(summary));
+        }
+        log.info("--------------------{}-`{}`-{}----------------------", "listObjects列出桶里面的对象信息", "listObjects", "end");
+    }
+
+    /**
+     * 删除一个对象
+     */
+
+    public void removeObject() throws IOException {
+        putObject();
+        log.info("--------------------{}-`{}`-{}----------------------", "删除一个对象", "removeObject", "start");
+        DeleteObjectCmd deleteObjectCmd = new DeleteObjectCmd();
+        deleteObjectCmd.setBucketName(bucketName);
+        deleteObjectCmd.setRegion(null);
+        deleteObjectCmd.setObjectName("test/test.txt");
+        deleteObjectCmd.setVersionId(null);
+        deleteObjectCmd.setBypassGovernanceMode(true);
+        deleteObjectCmd.setExtraHeaders(Maps.newHashMap());
+        deleteObjectCmd.setExtraQueryParams(Maps.newHashMap());
+        minioOssTemplate.removeObject(deleteObjectCmd);
+        log.info("--------------------{}-`{}`-{}----------------------", "删除一个对象", "removeObject", "end");
+    }
+
+    /**
+     * 删除多个对象。
+     */
+
+    public void removeObjects() throws IOException {
+        putObject();
+        uploadObject();
+        log.info("--------------------{}-`{}`-{}----------------------", "删除多个对象", "removeObjects", "start");
+        List<DeleteObjectsItemCmd> objects = new ArrayList<>();
+        objects.add(new DeleteObjectsItemCmd("/test/test.txt",null));
+        objects.add(new DeleteObjectsItemCmd("/test/1.txt",null));
+        DeleteObjectsCmd deleteObjectsCmd = new DeleteObjectsCmd();
+        deleteObjectsCmd.setBucketName(bucketName);
+        deleteObjectsCmd.setRegion("");
+        deleteObjectsCmd.setObjects(objects);
+        deleteObjectsCmd.setBypassGovernanceMode(false);
+        deleteObjectsCmd.setExtraHeaders(Maps.newHashMap());
+        deleteObjectsCmd.setExtraQueryParams(Maps.newHashMap());
+        minioOssTemplate.removeObjects(deleteObjectsCmd);
+        log.info("--------------------{}-`{}`-{}----------------------", "删除多个对象", "removeObjects", "end");
+    }
+
+    /**
+     * 获取对象的对象信息和元数据
+     */
+
+    public void getStatObject() {
+        log.info("--------------------{}-`{}`-{}----------------------", "获取对象的对象信息和元数据", "getStatObject", "start");
+        GetStatObjectCmd cmd = new GetStatObjectCmd();
+        cmd.setBucketName(bucketName);
+        cmd.setRegion("");
+        cmd.setObjectName("test/test.txt");
+        cmd.setVersionId("");
+        cmd.setOffset(0L);
+        cmd.setLength(0L);
+        cmd.setNotMatchEtag(Lists.newArrayList());
+        cmd.setMatchETag(Lists.newArrayList());
+        cmd.setModifiedSince(LocalDateTime.now());
+        cmd.setUnmodifiedSince(LocalDateTime.now());
+        cmd.setExtraHeaders(Maps.newHashMap());
+        cmd.setExtraQueryParams(Maps.newHashMap());
+        StatObjectDTO statObject = minioOssTemplate.getStatObject(cmd);
+        System.out.println(statObject);
+        log.info("--------------------{}-`{}`-{}----------------------", "获取对象的对象信息和元数据", "getStatObject", "end");
+    }
+
+    /**
+     * GetObject接口用于获取某个文件（Object）
+     */
+
+    public void getObject() {
+        log.info("--------------------{}-`{}`-{}----------------------", " GetObject接口用于获取某个文件", "getObject", "start");
+        GetObjectCmd getObjectCmd = new GetObjectCmd();
+        getObjectCmd.setObjectName("test/test.txt");
+        getObjectCmd.setVersionId(null);
+        getObjectCmd.setOffset(0L);
+        getObjectCmd.setLength(3L);
+        getObjectCmd.setNotMatchEtag(Lists.newArrayList());
+        getObjectCmd.setMatchETag(Lists.newArrayList());
+        getObjectCmd.setModifiedSince(null);
+        getObjectCmd.setUnmodifiedSince(LocalDateTime.now());
+        getObjectCmd.setBucketName(bucketName);
+        getObjectCmd.setRegion("");
+        getObjectCmd.setExtraHeaders(Maps.newHashMap());
+        getObjectCmd.setExtraQueryParams(Maps.newHashMap());
+        GetObjectDTO object = minioOssTemplate.getObject(getObjectCmd);
+        System.out.println(JSON.toJSONString(object));
+        log.info("--------------------{}-`{}`-{}----------------------", " GetObject接口用于获取某个文件", "getObject", "end");
+    }
+
+    /**
+     * 获取一个指定了 HTTP 方法、到期时间和自定义请求参数的对象URL地址，也就是返回带签名的URL，
+     * <p>
+     * 这个地址可以提供给没有登录的第三方共享访问或者上传对象。
+     */
+
+    public void getPreSignedObjectUrl() {
+        log.info("--------------------{}-`{}`-{}----------------------", "获取一个指定了 HTTP 方法、到期时间和自定义请求参数的对象URL地址，也就是返回带签名的URL，", "getPreSignedObjectUrl", "start");
+        GetPreSignedObjectUrlCmd objectUrlCmd = new GetPreSignedObjectUrlCmd();
+        objectUrlCmd.setBucketName(bucketName);
+        objectUrlCmd.setRegion(null);
+        objectUrlCmd.setObjectName("test/test.txt");
+        objectUrlCmd.setVersionId(null);
+        objectUrlCmd.setMethod(HttpMethod.GET);
+        objectUrlCmd.setExpiration(Duration.ofMinutes(1L));
+        objectUrlCmd.setExtraHeaders(Maps.newHashMap());
+        objectUrlCmd.setExtraQueryParams(Maps.newHashMap());
+        String preSignedObjectUrl = minioOssTemplate.getPreSignedObjectUrl(objectUrlCmd);
+        System.out.println(preSignedObjectUrl);
+        log.info("--------------------{}-`{}`-{}----------------------", "获取一个指定了 HTTP 方法、到期时间和自定义请求参数的对象URL地址，也就是返回带签名的URL，", "getPreSignedObjectUrl", "end");
+    }
+
+
+
+    /**
+     * 将对象的数据下载到文件。主要用于在服务端下载
+     */
+
+    public void downloadObject() {
+        log.info("--------------------{}-`{}`-{}----------------------", "将对象的数据下载到文件。主要用于在服务端下载", "downloadObject", "start");
+        DownloadObjectCmd objectCmd = new DownloadObjectCmd();
+        objectCmd.setBucketName(bucketName);
+        objectCmd.setRegion(null);
+        objectCmd.setObjectName("test/test.txt");
+        objectCmd.setFileName("F:\\my-project\\xht-cloud-parent\\xht-cloud-framework\\xht-cloud-framework-file\\xht-cloud-spring-boot-start-minio\\src\\test\\java\\com\\it\\test\\3.txt");
+        objectCmd.setOverwrite(false);
+        objectCmd.setVersionId(null);
+        objectCmd.setExtraHeaders(Maps.newHashMap());
+        objectCmd.setExtraQueryParams(Maps.newHashMap());
+        minioOssTemplate.downloadObject(objectCmd);
+        log.info("--------------------{}-`{}`-{}----------------------", "将对象的数据下载到文件。主要用于在服务端下载", "downloadObject", "end");
+    }
+
+    /**
+     * 上传文件
+     */
+
+    public void putObject() throws IOException {
+        log.info("--------------------{}-`{}`-{}----------------------", "上传文件", "putObject", "start");
+        PutObjectCmd putObjectCmd = new PutObjectCmd();
+        BufferedInputStream inputStream = FileUtil.getInputStream("F:\\my-project\\xht-cloud-parent\\xht-cloud-framework\\xht-cloud-framework-file\\xht-cloud-spring-boot-start-minio\\src\\test\\java\\com\\it\\test\\OssBucketOperationsTest.java");
+        putObjectCmd.setStream(inputStream);
+        putObjectCmd.setBucketName(bucketName);
+        putObjectCmd.setRegion("12312312");
+        putObjectCmd.setObjectName("/test/test.txt");
+        putObjectCmd.setObjectSize((long) inputStream.available());
+        putObjectCmd.setPartSize(-1L);
+        putObjectCmd.setContentType(ContentType.OCTET_STREAM);
+        putObjectCmd.setTags(getMap("tagKey","tagValue"));
+        putObjectCmd.setRequestHeaders(getMap("setRequestHeadersKey","setRequestHeadersValue"));
+        putObjectCmd.setMetadata(getMap("setMetadataKey","setMetadataValue"));
+        putObjectCmd.setExtraHeaders(getMap("setExtraHeadersKey","setExtraHeadersValue"));
+        putObjectCmd.setExtraQueryParams(getMap("setExtraQueryParamsKey","setExtraQueryParamsValue"));
+        PutObjectDTO putObjectDTO = minioOssTemplate.putObject(putObjectCmd);
+        System.out.println(JSON.toJSONString(putObjectDTO));
+        log.info("--------------------{}-`{}`-{}----------------------", "上传文件", "putObject", "end");
+    }
+    /**
+     * 将文件中的内容作为存储桶中的对象上传
+     */
+
+    public void uploadObject() {
+        log.info("--------------------{}-`{}`-{}----------------------", "将文件中的内容作为存储桶中的对象上传", "uploadObject", "start");
+        UploadObjectCmd uploadObjectCmd = new UploadObjectCmd();
+        uploadObjectCmd.setBucketName(bucketName);
+        uploadObjectCmd.setRegion("public-c");
+        uploadObjectCmd.setObjectName("/test/1.txt");
+        uploadObjectCmd.setFileName("F:\\my-project\\xht-cloud-parent\\xht-cloud-framework\\xht-cloud-framework-file\\xht-cloud-spring-boot-start-minio\\src\\main\\java\\com\\xht\\cloud\\file\\oss\\package-info.java");
+        uploadObjectCmd.setContentType(ContentType.OCTET_STREAM);
+        HashMap<@Nullable String, @Nullable String> emp = Maps.newHashMap();
+        emp.put("empKey1", "empValue1");
+        emp.put("empKey2", "empValue2");
+        uploadObjectCmd.setTags(emp);
+        uploadObjectCmd.setRequestHeaders(emp);
+        uploadObjectCmd.setMetadata(emp);
+        uploadObjectCmd.setExtraHeaders(emp);
+        uploadObjectCmd.setExtraQueryParams(emp);
+        UploadObjectDTO dto = minioOssTemplate.uploadObject(uploadObjectCmd);
+        System.out.println(JSON.toJSONString(dto));
+        log.info("--------------------{}-`{}`-{}----------------------", "将文件中的内容作为存储桶中的对象上传", "uploadObject", "end");
+    }
+
+    private Map<String, String> getMap(String key,String value) {
+        Map<String, String> map = new HashMap<>();
+        for (int i = 0; i < 10; i++) {
+            map.put(key + i, value + i);
+        }
+        return map;
+    }
+}

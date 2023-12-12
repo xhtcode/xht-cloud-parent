@@ -1,0 +1,51 @@
+package ${packageName};
+
+#foreach($pkg in ${importClassNames})
+ ${pkg}
+#end
+
+/**
+ * 描述 ：${tableComment}
+ *
+ * @author : ${author}
+ **/
+public interface I${className}Service{
+
+    /**
+     * 创建
+     *
+     * @param addRequest {@link ${className}AddRequest}
+     * @return {@link String} 主键
+     */
+    String create(${className}AddRequest addRequest);
+
+    /**
+     * 根据id修改
+     *
+     * @param updateRequest {@link ${className}UpdateRequest}
+     */
+    void update(${className}UpdateRequest updateRequest);
+
+    /**
+     * 删除
+     *
+     * @param ids {@link List<String>} id集合
+     */
+    void remove(List<String> ids);
+
+    /**
+     * 根据id查询详细
+     *
+     * @param id {@link String} 数据库主键
+     * @return {@link ${className}Response}
+     */
+    ${className}Response findById(String id);
+
+    /**
+     * 分页查询
+     * @param queryRequest {@link ${className}QueryRequest}
+     * @return {@link PageResponse<${className}Response>} 分页详情
+     */
+    PageResponse<${className}Response> findPage(${className}QueryRequest queryRequest);
+
+}

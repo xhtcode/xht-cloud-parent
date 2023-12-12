@@ -1,0 +1,31 @@
+*{
+    -moz-user-select: none; /* Firefox私有属性 */
+    -webkit-user-select: none; /* WebKit内核私有属性 */
+    -ms-user-select: none; /* IE私有属性(IE10及以后) */
+    -khtml-user-select: none; /* KHTML内核私有属性 */
+    -o-user-select: none; /* Opera私有属性 */
+    user-select: none; /* CSS3属性 */
+}
+body {
+    padding: 0;
+    margin: 0;
+    background-image: url(../image/bg.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+.main-container{
+    padding-top: 50px;
+}
+.main-container form{
+    width: 45%;
+    margin: 0 auto;
+}
+.help-block{
+    font-size: 16px;
+}
+#write-email-btn{
+    width: 150px;
+}

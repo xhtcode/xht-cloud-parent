@@ -1,0 +1,157 @@
+<template>
+  <div class="app-container">
+    <el-form :inline="true" :model="queryParams" ref="queryFormRef" size="default" label-width="68px"
+             v-if="pageInit.showSearch">
+#foreach($column in $columns)
+      <el-form-item label="${column.describe}" prop="${column.columnName}">
+        <el-input v-model="queryParams.${column.columnName}" clearable placeholder="${column.describe}"/>
+      </el-form-item>
+#end
+      <el-form-item>
+        <el-button class="el-button el-button--primary el-button--mini" icon="search" size="small"
+                   @click="handleQuery">查询
+        </el-button>
+        <el-button class="el-button el-button--default el-button--mini" icon="refresh" size="small"
+                   @click="resetQuery">重置
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button type="primary" icon="plus" size="small" @click="handleAdd" v-auth="'${perms}:add'">增加</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="success" icon="edit" size="small" :disabled="pageInit.single" @click="handleUpdate" v-auth="'${perms}:edit'">修改
+        </el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button type="danger" icon="delete" size="small" :disabled="pageInit.multiple" @click="handleDelete" v-auth="'${perms}:remove'">删除
+        </el-button>
+      </el-col>
+      <RightToolbar v-model:showSearch="pageInit.showSearch" @queryTable="handleQuery"></RightToolbar>
+    </el-row>
+    <el-table v-loading="pageInit.loading"
+              :data="tableList"
+              ref="tableRef"
+              @sort-change="handleQuery"
+              @selection-change="handleSelectionChange"
+              empty-text="暂无系统角色">
+      <el-table-column type="selection" width="55" align="center"/>
+      <el-table-column label="序号" type="index" width="50" align="center">
+        <template #default="scope">
+          <span>{{ (queryParams.current - 1) * queryParams.size + scope.$index + 1 }}</span>
+        </template>
+      </el-table-column>
+#foreach($column in $columns)
+      <el-table-column label="${column.describe}" prop="${column.columnName}" sortable/>
+#end
+      <el-table-column label="操作" width="260px" align="center" class-name="small-padding fixed-width">
+        <template #default="scope">
+          <el-button link icon="edit" @click="handleUpdate(scope.row)" type="success" v-auth="'${perms}:edit'">编辑</el-button>
+          <el-button link icon="delete" @click="handleDelete(scope.row)" type="danger" v-auth="'${perms}:remove'">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <Pagination v-model:total='pageInit.total' v-model:page='queryParams.current' v-model:limit='queryParams.size'
+                @pagination='handleQuery'/>
+    <add-or-update ref="addUpdateRef" @success="handleQuery"/>
+  </div>
+</template>
+
+<script lang="ts" setup name="${className}Index">
+import {delete${className}ById, get${className}Page} from '${apiPackage}'
+import AddOrUpdate from '${addOrUpdatePackage}.vue'
+import {reactive, ref, toRefs} from 'vue'
+import {FormInstance} from 'element-plus'
+import {${className}, ${className}Status} from '${typesPackage}'
+import {toReactive} from '@vueuse/core'
+import Message from '@/utils/message'
+import {pageParams} from '@/utils/util'
+
+const state = reactive<${className}.Reactive>({
+  pageInit: {...${className}Status.defaultPageInit},
+  queryParams: {
+    descName: 'id', //排序字段
+  }, //查询参数
+  tableList: [], //表格数据
+})
+const {queryParams, pageInit} = toReactive(state)
+const {tableList} = toRefs(state)
+const queryFormRef = ref<FormInstance>()
+const addUpdateRef = ref<any>()
+const tableRef = ref<any>()
+
+/**
+ * 多选框选中数据
+ * @param selection 选中信息
+ */
+const handleSelectionChange = (selection: ${className}.Options[]) => {
+  pageInit.ids = selection.map((item: ${className}.Options) => item.id)
+  pageInit.single = selection.length !== 1
+  pageInit.multiple = !selection.length
+}
+
+/**
+ * 重置表单
+ */
+const resetQuery = () => {
+  queryFormRef.value?.resetFields();
+  tableRef.value?.clearSort()
+  queryParams.ascName = ''
+  queryParams.descName = ''
+  handleQuery();
+}
+
+/**
+ * 搜索按钮操作
+ */
+const handleQuery = async (data?: any) => {
+  pageInit.loading = true
+  pageParams(queryParams, data)
+  await get${className}Page(queryParams).then(res => {
+    tableList.value = res.data.list
+    pageInit.total = res.data.total;
+  }).finally(() => {
+    pageInit.loading = false
+  })
+}
+
+/**
+ * 添加按钮操作
+ */
+const handleAdd = () => {
+  addUpdateRef.value.show(null)
+}
+
+/**
+ * 修改按钮操作
+ * @param row 当前行信息、按钮本身信息
+ */
+const handleUpdate = (row: ${className}.Options) => {
+  addUpdateRef.value.show(row.id || (pageInit.ids as string[])[0])
+}
+
+/**
+ * 删除按钮操作
+ * @param row 当前行信息
+ */
+const handleDelete = (row: ${className}.Options) => {
+  pageInit.loading = true
+  Message.confirmWarning('此操作将永久删除, 是否继续?').then(async () => {
+    let reqIds = row?.id ? [row.id] : pageInit.ids
+    await delete${className}ById(reqIds as any[]).then(() => {
+      handleQuery()
+      Message.success('删除成功!')
+    })
+  }).catch(() => {
+    pageInit.loading = false
+  })
+}
+
+handleQuery()
+
+</script>
+
+<style lang="scss" scoped>
+
+</style>

@@ -1,0 +1,15 @@
+package ${packageName};
+
+#foreach($pkg in ${importClassNames})
+${pkg}
+#end
+
+/**
+ * 描述 ：${tableComment}
+ *
+ * @author : ${author}
+ **/
+@Mapper
+public interface ${className}Mapper extends BaseMapperX<${className}DO> {
+
+}

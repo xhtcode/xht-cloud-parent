@@ -1,0 +1,40 @@
+server:
+  port: 9010
+
+spring:
+  application:
+    name: xht-cloud-system
+  profiles:
+    active: @profiles.active@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: @nacos.server-addr@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+      config:
+        server-addr: @nacos.server-addr@
+        username: @nacos.username@
+        password: @nacos.password@
+        namespace: @nacos.namespace@
+        group: @nacos.group@
+        file-extension: yml
+        prefix: ${spring.application.name} # 默认配置
+        shared-configs:
+          - data-id: xht-cloud-common-oauth2.yaml
+            group: @nacos.group@
+            refresh: true
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+xht:
+  oss:
+    minio:
+      host: http://127.0.0.1:8001
+      accessKey: minioadmin
+      secretKey: minioadmin
+      bucketName: test3
