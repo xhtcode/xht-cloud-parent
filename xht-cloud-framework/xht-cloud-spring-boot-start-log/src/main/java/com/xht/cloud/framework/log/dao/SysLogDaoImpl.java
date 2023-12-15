@@ -1,6 +1,7 @@
 package com.xht.cloud.framework.log.dao;
 
-import com.alibaba.fastjson.JSON;
+import com.xht.cloud.framework.core.api.ROptional;
+import com.xht.cloud.framework.log.api.DefaultSysLogApi;
 import com.xht.cloud.framework.log.dto.SysLogDTO;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,7 +12,11 @@ import lombok.extern.slf4j.Slf4j;
  **/
 @Slf4j
 public class SysLogDaoImpl implements SysLogDao {
-    public SysLogDaoImpl() {
+
+    private final DefaultSysLogApi sysLogApi;
+
+    public SysLogDaoImpl(DefaultSysLogApi sysLogApi) {
+        this.sysLogApi = sysLogApi;
         log.info("远程调用 日志bean 加载");
     }
 
@@ -23,7 +28,6 @@ public class SysLogDaoImpl implements SysLogDao {
      */
     @Override
     public boolean insert(SysLogDTO sysLogDTO) {
-        System.err.println("db 存储模拟"+ JSON.toJSONString(sysLogDTO));
-        return true;
+        return ROptional.ofNullable(sysLogApi.createOperateLog(sysLogDTO)).getData().orElse(false);
     }
 }

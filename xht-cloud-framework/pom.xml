@@ -51,11 +51,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope><!-- 设置为 provided，只有工具类需要使用到 -->
         </dependency>
-        <!-- 日志框架整合 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <!-- 设置构建的 jar 包名 -->

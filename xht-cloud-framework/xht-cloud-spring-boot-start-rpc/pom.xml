@@ -18,6 +18,11 @@
     </properties>
 
     <dependencies>
+        <!-- RPC 远程调用相关 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
         <!-- Openfeign 中 包含loadbalancer，所以直接引用该包 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

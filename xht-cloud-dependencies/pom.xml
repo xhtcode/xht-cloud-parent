@@ -20,8 +20,8 @@
         <xht.cloud.version>2023</xht.cloud.version>
 
         <!-- spring 相关-->
-        <spring.boot.version>3.1.0</spring.boot.version>
-        <spring.cloud.version>2022.0.2</spring.cloud.version>
+        <spring.boot.version>3.2.0</spring.boot.version>
+        <spring.cloud.version>2023.0.0</spring.cloud.version>
         <spring.cloud.alibaba.version>2022.0.0.0-RC2</spring.cloud.alibaba.version>
 
         <!--接口文档-->
@@ -34,7 +34,7 @@
         <git.commit.plugin>4.9.9</git.commit.plugin>
 
         <!--开发工具类-->
-        <hu.tool.version>5.8.20</hu.tool.version>
+        <hu.tool.version>5.8.23</hu.tool.version>
         <lombok.version>1.18.28</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
 
@@ -42,7 +42,7 @@
         <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <mysql.connector.version>8.0.33</mysql.connector.version>
         <p6spy.version>3.9.1</p6spy.version>
-        <druid.version>1.2.18</druid.version>
+        <druid.version>1.2.20</druid.version>
         <!--json解析-->
         <fastjson.version>1.2.83</fastjson.version>
 
@@ -177,7 +177,7 @@
                 <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
-            <!--hutool 工具包-->
+            <!-- hutool 工具包-->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
@@ -263,10 +263,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <!-- 设置构建的 jar 包名 -->
-        <finalName>${project.artifactId}</finalName>
-    </build>
     <!-- 使用 aliyun 的 Maven 源，提升下载速度 -->
     <repositories>
         <repository>
@@ -275,4 +271,10 @@
             <url>https://maven.aliyun.com/repository/public</url>
         </repository>
     </repositories>
+
+
+    <build>
+        <!-- 设置构建的 jar 包名 -->
+        <finalName>${project.artifactId}</finalName>
+    </build>
 </project>

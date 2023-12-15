@@ -49,6 +49,11 @@
             <artifactId>xht-cloud-spring-boot-start-web</artifactId>
             <scope>provided</scope><!-- 设置为 provided，只有工具类需要使用到 -->
         </dependency>
+        <dependency>
+            <groupId>com.xht.cloud</groupId>
+            <artifactId>xht-cloud-spring-boot-start-rpc</artifactId>
+            <scope>provided</scope><!-- 设置为 provided，只有工具类需要使用到 -->
+        </dependency>
     </dependencies>
     <build>
         <!-- 设置构建的 jar 包名 -->
