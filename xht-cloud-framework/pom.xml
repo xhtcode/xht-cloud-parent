@@ -13,7 +13,6 @@
     <modules>
         <module>xht-cloud-framework-core</module>
         <module>xht-cloud-spring-boot-start-mybatis</module>
-        <module>xht-cloud-framework-generate</module>
         <module>xht-cloud-spring-boot-start-web</module>
         <module>xht-cloud-spring-boot-start-log</module>
         <module>xht-cloud-spring-boot-start-security</module>

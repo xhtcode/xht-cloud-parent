@@ -51,10 +51,6 @@
         </dependency>
         <dependency>
             <groupId>com.xht.cloud</groupId>
-            <artifactId>xht-cloud-framework-generate</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.xht.cloud</groupId>
             <artifactId>xht-cloud-spring-boot-start-minio</artifactId>
         </dependency>
         <dependency>

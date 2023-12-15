@@ -81,13 +81,6 @@
                 <artifactId>xht-cloud-spring-boot-start-web</artifactId>
                 <version>${xht.cloud.version}</version>
             </dependency>
-            <!--代码生成器-->
-            <dependency>
-                <groupId>com.xht.cloud</groupId>
-                <artifactId>xht-cloud-framework-generate</artifactId>
-                <scope>test</scope>
-                <version>${xht.cloud.version}</version>
-            </dependency>
             <!--security 扩展包-->
             <dependency>
                 <groupId>com.xht.cloud</groupId>
