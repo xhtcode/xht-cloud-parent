@@ -3,7 +3,7 @@ package com.xht.cloud.system.module.area.controller;
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.api.response.PageResponse;
 import com.xht.cloud.framework.core.treenode.INode;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmit;
+import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
 import com.xht.cloud.framework.security.annotaion.SkipAuthentication;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
@@ -56,7 +56,7 @@ public class SysAreaInfoController {
      */
     @Operation(summary = "创建-地区信息")
     @PostMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:area-info:add')")
     public R<Boolean> create(@Validated(Create.class) @RequestBody SysAreaInfoAddRequest addRequest) {
         sysAreaInfoService.create(addRequest);
@@ -71,7 +71,7 @@ public class SysAreaInfoController {
      */
     @Operation(summary = "根据id修改-地区信息")
     @PutMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:area-info:edit')")
     public R<Boolean> update(@Validated(Update.class) @RequestBody SysAreaInfoUpdateRequest updateRequest) {
         sysAreaInfoService.update(updateRequest);
@@ -87,7 +87,7 @@ public class SysAreaInfoController {
     @Operation(summary = "根据id删除-地区信息")
     @Parameter(name = "id", description = "id", required = true)
     @DeleteMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:area-info:remove')")
     public R<Boolean> remove(@RequestBody List<String> ids) {
         sysAreaInfoService.remove(ids);

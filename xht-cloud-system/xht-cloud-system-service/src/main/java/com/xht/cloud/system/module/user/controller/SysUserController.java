@@ -2,7 +2,7 @@ package com.xht.cloud.system.module.user.controller;
 
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.api.response.PageResponse;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmit;
+import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
 import com.xht.cloud.system.module.user.controller.request.SysUserAddRequest;
@@ -19,14 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,7 +47,7 @@ public class SysUserController {
      */
     @Operation(summary = "创建-用户")
     @PostMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:user:add')")
     public R<String> create(@Validated(Create.class) @RequestBody SysUserBaseAddUpdate request) {
         return ok(sysUserService.create(request));
@@ -68,7 +61,7 @@ public class SysUserController {
      */
     @Operation(summary = "根据id修改-用户")
     @PutMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:user:edit')")
     public R<String> update(@Validated(Update.class) @RequestBody SysUserBaseAddUpdate request) {
         return ok(sysUserService.update(request));
@@ -83,7 +76,7 @@ public class SysUserController {
     @Operation(summary = "根据id删除-用户")
     @Parameter(name = "id", description = "id", required = true)
     @DeleteMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:user:remove')")
     public R<Boolean> remove(@RequestBody List<String> ids) {
         sysUserService.remove(ids);
@@ -122,7 +115,7 @@ public class SysUserController {
      */
     @Operation(summary = "分页查询-用户")
     @PutMapping("/reset/password/{userId}")
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:user:password:reset')")
     public R<String> resetUserPassword(@PathVariable("userId") String userId) {
         return R.ok(sysUserService.resetUserPassword(userId));

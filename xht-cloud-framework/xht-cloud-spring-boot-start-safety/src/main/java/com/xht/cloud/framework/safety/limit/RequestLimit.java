@@ -7,25 +7,25 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 描述 ：接口限流
+ * 描述 ：接口限流 默认一分钟10次
  *
  * @author : 小糊涂
  **/
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 @Documented
-public @interface HttpLimit {
+public @interface RequestLimit {
 
     /**
      * 资源的key,唯一
      * 作用：不同的接口，不同的流量控制
      */
-    String key() default "";
+    String key();
 
     /**
      * 最多的访问限制次数
      */
-    long permitsPerSecond() default 2;
+    long permitsPerSecond() default 10;
 
     /**
      * 过期时间也可以理解为单位时间，单位秒，默认60

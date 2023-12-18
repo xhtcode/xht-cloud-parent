@@ -2,7 +2,7 @@ package com.xht.cloud.system.module.dict.controller;
 
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.api.response.PageResponse;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmit;
+import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
 import com.xht.cloud.system.module.dict.controller.request.SysDictAddRequest;
@@ -53,7 +53,7 @@ public class SysDictController {
      */
     @Operation(summary = "创建-字典")
     @PostMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dict:add')")
     public R<Boolean> create(@Validated(Create.class) @RequestBody SysDictAddRequest addRequest) {
         sysDictService.create(addRequest);
@@ -68,7 +68,7 @@ public class SysDictController {
      */
     @Operation(summary = "根据id修改-字典")
     @PutMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dict:edit')")
     public R<Boolean> update(@Validated(Update.class) @RequestBody SysDictUpdateRequest updateRequest) {
         sysDictService.update(updateRequest);
@@ -84,7 +84,7 @@ public class SysDictController {
     @Operation(summary = "根据id删除-字典")
     @Parameter(name = "id", description = "id", required = true)
     @DeleteMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dict:remove')")
     public R<Boolean> remove(@RequestBody List<String> ids) {
         sysDictService.remove(ids);

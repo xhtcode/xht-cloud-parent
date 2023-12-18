@@ -15,6 +15,7 @@ import java.util.function.Supplier;
  * @author : 小糊涂
  **/
 @Slf4j
+@SuppressWarnings("all")
 public class RedisServiceImpl implements RedisService {
 
     private final RedisOperations<String, Object> redisTemplate;
@@ -29,10 +30,8 @@ public class RedisServiceImpl implements RedisService {
      * @param timeout 超时时常
      * @param unit    超时类型
      * @param data    数据
-     * @param <T>
      * @return T
      */
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T getKey(String key, long timeout, TimeUnit unit, Supplier<T> data) {
         Object redisData = redisTemplate.opsForValue().get(key);

@@ -3,7 +3,7 @@ package com.xht.cloud.system.module.dept.controller;
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.api.response.PageResponse;
 import com.xht.cloud.framework.core.treenode.INode;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmit;
+import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
 import com.xht.cloud.system.module.dept.controller.request.SysDeptAddRequest;
@@ -53,7 +53,7 @@ public class SysDeptController {
      */
     @Operation(summary = "创建-部门")
     @PostMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dept:add')")
     public R<Boolean> create(@Validated(Create.class) @RequestBody SysDeptAddRequest addRequest) throws Exception {
         sysDeptService.validate(addRequest);
@@ -69,7 +69,7 @@ public class SysDeptController {
      */
     @Operation(summary = "根据id修改-部门")
     @PutMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dept:edit')")
     public R<Boolean> update(@Validated(Update.class) @RequestBody SysDeptUpdateRequest updateRequest) throws Exception {
         sysDeptService.validate(updateRequest);
@@ -86,7 +86,7 @@ public class SysDeptController {
     @Operation(summary = "根据id删除-部门")
     @Parameter(name = "id", description = "id", required = true)
     @DeleteMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dept:remove')")
     public R<Boolean> remove(@RequestBody List<String> ids) {
         sysDeptService.remove(ids);

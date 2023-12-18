@@ -2,7 +2,7 @@ package com.xht.cloud.system.module.dept.controller;
 
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.api.response.PageResponse;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmit;
+import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
 import com.xht.cloud.system.module.dept.controller.request.SysPositionAddRequest;
@@ -52,7 +52,7 @@ public class SysPositionController {
      */
     @Operation(summary = "创建-岗位信息")
     @PostMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:position:add')")
     public R<Boolean> create(@Validated(Create.class) @RequestBody SysPositionAddRequest addRequest) {
         sysPositionService.create(addRequest);
@@ -67,7 +67,7 @@ public class SysPositionController {
      */
     @Operation(summary = "根据id修改-岗位信息")
     @PutMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:position:edit')")
     public R<Boolean> update(@Validated(Update.class) @RequestBody SysPositionUpdateRequest updateRequest) {
         sysPositionService.update(updateRequest);
@@ -83,7 +83,7 @@ public class SysPositionController {
     @Operation(summary = "根据id删除-岗位信息")
     @Parameter(name = "id", description = "id", required = true)
     @DeleteMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:position:remove')")
     public R<Boolean> remove(@RequestBody List<String> ids) {
         sysPositionService.remove(ids);

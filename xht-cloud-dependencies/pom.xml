@@ -39,7 +39,8 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
 
         <!--数据库解析-->
-        <mybatisplus.version>3.5.3.1</mybatisplus.version>
+        <mybatisplus.version>3.5.4</mybatisplus.version>
+        <mybatis-spring.version>3.0.3</mybatis-spring.version>
         <mysql.connector.version>8.0.33</mysql.connector.version>
         <p6spy.version>3.9.1</p6spy.version>
         <druid.version>1.2.20</druid.version>
@@ -220,6 +221,11 @@
                         <artifactId>mybatis-plus-generator</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis-spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>

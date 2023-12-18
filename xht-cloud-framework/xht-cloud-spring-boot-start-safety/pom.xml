@@ -28,6 +28,7 @@
         <dependency>
             <groupId>com.xht.cloud</groupId>
             <artifactId>xht-cloud-spring-boot-start-redis</artifactId>
+            <scope>provided</scope> <!-- 设置为 provided，只有工具类需要使用到 -->
         </dependency>
     </dependencies>
     <build>

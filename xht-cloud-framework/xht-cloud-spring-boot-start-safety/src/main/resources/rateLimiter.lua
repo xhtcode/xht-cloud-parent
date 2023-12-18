@@ -1,8 +1,8 @@
 --获取KEY
 local key = KEYS[1]
-
+-- 获取第一个参数
 local limit = tonumber(ARGV[1])
-
+-- 获取redis里面的值
 local curentLimit = tonumber(redis.call('get', key) or "0")
 
 if curentLimit + 1 > limit

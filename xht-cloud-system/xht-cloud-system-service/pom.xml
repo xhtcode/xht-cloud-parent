@@ -47,7 +47,17 @@
         </dependency>
         <dependency>
             <groupId>com.xht.cloud</groupId>
+            <artifactId>xht-cloud-spring-boot-start-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud</groupId>
             <artifactId>xht-cloud-spring-boot-start-rpc</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-fileupload</groupId>
+                    <artifactId>commons-fileupload</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.xht.cloud</groupId>

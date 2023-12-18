@@ -2,7 +2,7 @@ package com.xht.cloud.system.module.permissions.controller;
 
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.treenode.INode;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmit;
+import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
 import com.xht.cloud.system.module.permissions.controller.request.SysMenuAddRequest;
@@ -52,7 +52,7 @@ public class SysMenuController {
      */
     @Operation(summary = "创建-菜单权限")
     @PostMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:menu:add')")
     public R<Boolean> create(@Validated(Create.class) @RequestBody SysMenuAddRequest addRequest) {
         sysMenuService.validationAndFormat(null, addRequest);
@@ -68,7 +68,7 @@ public class SysMenuController {
      */
     @Operation(summary = "根据id修改-菜单权限")
     @PutMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:menu:edit')")
     public R<Boolean> update(@Validated(Update.class) @RequestBody SysMenuUpdateRequest updateRequest) {
         sysMenuService.validationAndFormat(updateRequest.getId(), updateRequest);
@@ -85,7 +85,7 @@ public class SysMenuController {
     @Operation(summary = "根据id删除-菜单权限")
     @Parameter(name = "id", description = "id", required = true)
     @DeleteMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:menu:remove')")
     public R<Boolean> remove(@RequestBody List<String> ids) {
         sysMenuService.remove(ids);

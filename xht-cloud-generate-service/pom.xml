@@ -32,8 +32,12 @@
             <artifactId>xht-cloud-spring-boot-start-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>com.xht.cloud</groupId>
+            <artifactId>xht-cloud-spring-boot-start-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud</groupId>
+            <artifactId>xht-cloud-spring-boot-start-safety</artifactId>
         </dependency>
     </dependencies>
     <build>

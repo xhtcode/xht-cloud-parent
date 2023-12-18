@@ -2,7 +2,7 @@ package com.xht.cloud.system.module.poetry.controller;
 
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.api.response.PageResponse;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmit;
+import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
 import com.xht.cloud.system.module.poetry.controller.request.SysDictPoetryAddRequest;
@@ -13,19 +13,14 @@ import com.xht.cloud.system.module.poetry.service.ISysDictPoetryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 import static com.xht.cloud.framework.core.api.R.ok;
 
 /**
@@ -50,7 +45,7 @@ public class SysDictPoetryController {
      */
     @Operation(summary = "创建-")
     @PostMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dict-poetry:add')")
     public R<Boolean> create(@Validated(Create.class) @RequestBody SysDictPoetryAddRequest addRequest) {
         sysDictPoetryService.create(addRequest);
@@ -65,7 +60,7 @@ public class SysDictPoetryController {
      */
     @Operation(summary = "根据id修改-")
     @PutMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dict-poetry:edit')")
     public R<Boolean> update(@Validated(Update.class) @RequestBody SysDictPoetryUpdateRequest updateRequest) {
         sysDictPoetryService.update(updateRequest);
@@ -81,7 +76,7 @@ public class SysDictPoetryController {
     @Operation(summary = "根据id删除-")
     @Parameter(name = "id", description = "id", required = true)
     @DeleteMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:dict-poetry:remove')")
     public R<Boolean> remove(@RequestBody List<String> ids) {
         sysDictPoetryService.remove(ids);

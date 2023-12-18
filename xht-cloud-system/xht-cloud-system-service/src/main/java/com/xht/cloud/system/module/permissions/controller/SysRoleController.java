@@ -2,7 +2,7 @@ package com.xht.cloud.system.module.permissions.controller;
 
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.api.response.PageResponse;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmit;
+import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
 import com.xht.cloud.system.module.permissions.controller.request.SysRoleAddRequest;
@@ -52,7 +52,7 @@ public class SysRoleController {
      */
     @Operation(summary = "创建-系统角色表")
     @PostMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:role:add')")
     public R<Boolean> create(@Validated(Create.class) @RequestBody SysRoleAddRequest addRequest) {
         sysRoleService.create(addRequest);
@@ -67,7 +67,7 @@ public class SysRoleController {
      */
     @Operation(summary = "根据id修改-系统角色表")
     @PutMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:role:edit')")
     public R<Boolean> update(@Validated(Update.class) @RequestBody SysRoleUpdateRequest updateRequest) {
         sysRoleService.update(updateRequest);
@@ -83,7 +83,7 @@ public class SysRoleController {
     @Operation(summary = "根据id删除-系统角色表")
     @Parameter(name = "id", description = "id", required = true)
     @DeleteMapping
-    @RepeatSubmit
+    @RepeatSubmitLimit
     @PreAuthorize("@oauth2.hasAnyAuthority('sys:role:remove')")
     public R<Boolean> remove(@RequestBody List<String> ids) {
         sysRoleService.remove(ids);

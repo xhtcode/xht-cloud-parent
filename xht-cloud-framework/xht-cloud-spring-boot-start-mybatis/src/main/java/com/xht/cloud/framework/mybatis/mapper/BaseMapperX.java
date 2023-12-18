@@ -1,13 +1,11 @@
 package com.xht.cloud.framework.mybatis.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.xht.cloud.framework.mybatis.core.dataobject.AbstractDO;
-import com.xht.cloud.framework.mybatis.tool.SqlHelper;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -21,15 +19,6 @@ import java.util.Optional;
  * @see BaseMapper
  **/
 public interface BaseMapperX<T extends AbstractDO> extends BaseMapper<T> {
-
-    /**
-     * 根据 whereEntity 条件，更新记录
-     *
-     * @param updateWrapper 实体对象封装操作类 {@link com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper}
-     */
-    default boolean update(Wrapper<T> updateWrapper) {
-        return SqlHelper.update(update(null, updateWrapper));
-    }
 
     /**
      * 根据 ID 查询
