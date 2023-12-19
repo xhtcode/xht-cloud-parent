@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
@@ -52,7 +52,7 @@ public class MybatisAutoConfiguration {
      * 设置自动填充
      */
     @Bean
-    @ConditionalOnBean(value = SecurityContextUtil.class)
+    @ConditionalOnClass(value = SecurityContextUtil.class)
     public MetaObjectHandler myMetaObjectHandlerSecurity() {
 
         return new MetaObjectHandler() {
@@ -76,20 +76,23 @@ public class MybatisAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(value = SecurityContextUtil.class)
+    @ConditionalOnMissingClass(value = "com.xht.cloud.framework.security.support.SecurityContextUtil")
     public MetaObjectHandler myMetaObjectHandler() {
 
         return new MetaObjectHandler() {
             @Override
             public void insertFill(MetaObject metaObject) {
                 this.strictInsertFill(metaObject, "createTime", LocalDateTime::now, LocalDateTime.class);
+                this.strictInsertFill(metaObject, "createBy", () -> "unknown", String.class);
                 this.strictInsertFill(metaObject, "updateTime", LocalDateTime::now, LocalDateTime.class);
+                this.strictInsertFill(metaObject, "updateBy", () -> "unknown", String.class);
                 this.strictInsertFill(metaObject, "delFlag", () -> DelFlagEnum.NORMAL, DelFlagEnum.class);
             }
 
             @Override
             public void updateFill(MetaObject metaObject) {
                 this.strictUpdateFill(metaObject, "updateTime", LocalDateTime::now, LocalDateTime.class);
+                this.strictUpdateFill(metaObject, "updateBy", () -> "unknown", String.class);
                 this.strictUpdateFill(metaObject, "delFlag", () -> DelFlagEnum.NORMAL, DelFlagEnum.class);
             }
         };

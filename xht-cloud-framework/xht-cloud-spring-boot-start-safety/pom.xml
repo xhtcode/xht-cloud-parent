@@ -30,6 +30,11 @@
             <artifactId>xht-cloud-spring-boot-start-redis</artifactId>
             <scope>provided</scope> <!-- 设置为 provided，只有工具类需要使用到 -->
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <!-- 设置构建的 jar 包名 -->

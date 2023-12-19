@@ -1,4 +1,4 @@
-package com.xht.cloud.framework.safety.repeat;
+package com.xht.cloud.framework.safety.repeat.annotation;
 
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;

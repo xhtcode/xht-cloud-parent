@@ -1,8 +1,9 @@
-package com.xht.cloud.framework.safety.limit;
+package com.xht.cloud.framework.safety.limit.aop;
 
 import com.xht.cloud.framework.core.support.StringUtils;
 import com.xht.cloud.framework.exception.business.BizException;
 import com.xht.cloud.framework.redis.key.RedisKeyTool;
+import com.xht.cloud.framework.safety.limit.annotation.RequestLimit;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ import java.util.List;
 @Slf4j
 @Aspect
 @RequiredArgsConstructor
-public class RequestLimitLimitAop {
+public class RequestLimitAop {
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -37,7 +38,7 @@ public class RequestLimitLimitAop {
     private String value;
 
 
-    @Pointcut("@annotation(com.xht.cloud.framework.safety.limit.RequestLimit)")
+    @Pointcut("@annotation(com.xht.cloud.framework.safety.limit.annotation.RequestLimit)")
     private void check() {
     }
 

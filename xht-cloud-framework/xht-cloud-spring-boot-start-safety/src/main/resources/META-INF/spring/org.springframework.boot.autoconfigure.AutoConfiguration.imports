@@ -1,3 +1,3 @@
-com.xht.cloud.framework.safety.repeat.dao.RepeatSubmitDao
-com.xht.cloud.framework.safety.repeat.RepeatSubmitAspect
-com.xht.cloud.framework.safety.limit.RequestLimitLimitAop
+com.xht.cloud.framework.safety.limit.RequestLimitAutoConfiguration
+com.xht.cloud.framework.safety.repeat.RepeatSubmitAutoConfiguration
+com.xht.cloud.framework.safety.xss.XSSAutoConfiguration

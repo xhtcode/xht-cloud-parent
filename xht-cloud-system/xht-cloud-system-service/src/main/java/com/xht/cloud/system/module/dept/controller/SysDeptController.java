@@ -3,7 +3,7 @@ package com.xht.cloud.system.module.dept.controller;
 import com.xht.cloud.framework.core.api.R;
 import com.xht.cloud.framework.core.api.response.PageResponse;
 import com.xht.cloud.framework.core.treenode.INode;
-import com.xht.cloud.framework.safety.repeat.RepeatSubmitLimit;
+import com.xht.cloud.framework.safety.repeat.annotation.RepeatSubmitLimit;
 import com.xht.cloud.framework.web.validation.group.Create;
 import com.xht.cloud.framework.web.validation.group.Update;
 import com.xht.cloud.system.module.dept.controller.request.SysDeptAddRequest;

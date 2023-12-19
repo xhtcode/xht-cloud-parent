@@ -75,6 +75,7 @@
         <dependency>
             <groupId>com.xht.cloud</groupId>
             <artifactId>xht-cloud-framework-exception</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>
