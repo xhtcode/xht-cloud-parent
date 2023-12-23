@@ -71,7 +71,7 @@ public class RequestLimitAop {
             long expire = redisLimit.expire();
             List<String> keys = new ArrayList<>();
             keys.add(RedisKeyTool.createName(value, key));
-            Long count = stringRedisTemplate.execute(redisScript, keys, StringUtils.emptyDefault(limit, "2"), StringUtils.emptyDefault(expire, "60"));
+            Long count = stringRedisTemplate.execute(redisScript, keys, limit, expire);
             log.info("Access try count is {} for key={}", count, key);
             if (count != null && count == 0) {
                 log.debug("令牌桶={}，获取令牌失败", key);
