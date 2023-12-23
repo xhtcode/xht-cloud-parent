@@ -97,10 +97,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
-        long l = sysMenuMapper.selectCountIn(SysMenuDO::getParentId, ids);
-        long l2 = sysRoleMenuMapper.selectCountIn(SysRoleMenuDO::getMenuId, ids);
-        ExceptionTool.menuValidation(l > 0, "该菜单有子菜单，禁止删除");
-        ExceptionTool.menuValidation(l2 > 0, "该菜单已绑定角色，禁止删除");
+        ExceptionTool.menuValidation(sysMenuMapper.selectCountIn(SysMenuDO::getParentId, ids) > 0, "该菜单有子菜单，禁止删除");
+        ExceptionTool.menuValidation(sysRoleMenuMapper.selectCountIn(SysRoleMenuDO::getMenuId, ids) > 0, "该菜单已绑定角色，禁止删除");
         sysMenuMapper.deleteBatchIds(ids);
     }
 
