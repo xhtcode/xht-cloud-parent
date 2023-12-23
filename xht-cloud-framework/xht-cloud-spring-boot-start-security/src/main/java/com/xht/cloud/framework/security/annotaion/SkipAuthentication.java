@@ -1,10 +1,8 @@
 package com.xht.cloud.framework.security.annotaion;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.xht.cloud.framework.core.constant.RpcConstants;
+
+import java.lang.annotation.*;
 
 /**
  * 描述 ：跳过权限认证
@@ -17,17 +15,12 @@ import java.lang.annotation.Target;
 public @interface SkipAuthentication {
 
     /**
-     * 是否AOP统一处理
-     * @return false, true
+     * 是否区分内部调用
+     * @return {@code false} 不区分, {@code true} 如果内部调用则放行不是内部调用则拦截
      */
     boolean value() default true;
 
+    String headerKey() default RpcConstants.RPC_HEADER_KEY;
 
-    /**
-     * 需要特殊判空的字段(预留)
-     * @return {}
-     */
-    String[] field() default {};
-
-
+    String headerValue() default "";
 }

@@ -1,6 +1,6 @@
 com.xht.cloud.framework.security.SecurityExceptionHandler
 com.xht.cloud.framework.security.Oauth2Properties
-com.xht.cloud.framework.security.WebClientConfig
+com.xht.cloud.framework.security.AuthorizationServerConfig
 com.xht.cloud.framework.security.crypto.password.CustomPasswordEncoder
 com.xht.cloud.framework.security.core.userdetails.impl.CustomUserDetailsService
 com.xht.cloud.framework.security.admin.AdminProperties

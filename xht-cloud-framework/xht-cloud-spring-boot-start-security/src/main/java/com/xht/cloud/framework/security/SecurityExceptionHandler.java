@@ -11,10 +11,10 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 描述 ：oss异常处理,如果要使用则继承它，注入到spring容器中。
+ * 描述 ：异常处理,如果要使用则继承它，注入到spring容器中。
  *
  * @author : 小糊涂
- * @see com.xht.cloud.framework.file.oss.exception.OssException
+ * @see AccessDeniedException
  **/
 @Slf4j
 @RestControllerAdvice
