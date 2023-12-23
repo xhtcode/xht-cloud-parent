@@ -39,6 +39,24 @@
             <groupId>com.xht.cloud</groupId>
             <artifactId>xht-cloud-spring-boot-start-safety</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.xht.cloud</groupId>
+            <artifactId>xht-cloud-spring-boot-start-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xht.cloud</groupId>
+            <artifactId>xht-cloud-spring-boot-start-rpc</artifactId>
+        </dependency>
+        <!-- nacos 注册中心-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!-- nacos 服务发现-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <!-- 设置构建的 jar 包名 -->

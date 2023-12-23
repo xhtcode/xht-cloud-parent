@@ -18,6 +18,16 @@
     </properties>
 
     <dependencies>
+        <!-- bootstrap.yml配置文件支持 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+        <!-- 负载均衡配置 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-loadbalancer</artifactId>
+        </dependency>
         <!-- Openfeign 中 包含loadbalancer，所以直接引用该包 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
