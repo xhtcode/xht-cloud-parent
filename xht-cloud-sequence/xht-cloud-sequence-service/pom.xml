@@ -5,16 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.xht.cloud</groupId>
-        <artifactId>xht-cloud-parent</artifactId>
+        <artifactId>xht-cloud-sequence</artifactId>
         <version>2023</version>
     </parent>
 
-    <artifactId>xht-cloud-sequence</artifactId>
-    <packaging>pom</packaging>
-    <description>业务模块-分布式id</description>
-    <modules>
-        <module>xht-cloud-sequence-service</module>
-    </modules>
+    <artifactId>xht-cloud-sequence-service</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -22,9 +17,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.xht.cloud</groupId>
+            <artifactId>xht-cloud-spring-boot-start-web</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <!-- 设置构建的 jar 包名 -->
         <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
     </build>
-
 </project>

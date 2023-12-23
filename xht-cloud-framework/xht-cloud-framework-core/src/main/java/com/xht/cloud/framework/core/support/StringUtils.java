@@ -1,9 +1,6 @@
 package com.xht.cloud.framework.core.support;
 
 
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.CharUtil;
-
 /**
  * 描述 ：{@link StringUtils}工具类扩展
  *
@@ -14,26 +11,18 @@ public final class StringUtils extends org.springframework.util.StringUtils {
     /**
      * 当字符串空的时候，返回默认值,不为空返回当前值
      */
-    public static String emptyDefault(Object data) {
-        return emptyDefault(data, "");
+    public static String emptyDefault(String value) {
+        return emptyDefault(value, "");
     }
 
     /**
      * 当字符串空的时候，返回默认值
      */
-    public static String emptyDefault(Object value, String defaultValue) {
-        if (ObjectUtils.isEmpty(value)) {
-            return defaultValue;
+    public static String emptyDefault(String value, String defaultValue) {
+        if (hasText(value)) {
+            return value;
         }
-        if (value instanceof CharSequence) {
-            return value.toString();
-        } else if (ArrayUtil.isArray(value)) {
-            return ArrayUtil.toString(value);
-        } else if (CharUtil.isChar(value)) {
-            //对于ASCII字符使用缓存加速转换，减少空间创建
-            return CharUtil.toString((char) value);
-        }
-        return value.toString();
+        return defaultValue;
     }
 
     /**

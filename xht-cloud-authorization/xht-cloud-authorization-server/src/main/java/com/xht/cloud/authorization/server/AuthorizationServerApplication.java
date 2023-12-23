@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @author Joe Grandja
  * @since 1.1
  */
-@EnableFeignClients(basePackages = {"com.xht.cloud"})
+@EnableFeignClients
 @SpringBootApplication
 public class AuthorizationServerApplication {
 

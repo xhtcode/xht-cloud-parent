@@ -2,6 +2,7 @@ package com.xht.cloud.framework.rpc.configuration;
 
 import com.xht.cloud.framework.rpc.interceptor.FeignRequestInterceptor;
 import feign.RequestInterceptor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

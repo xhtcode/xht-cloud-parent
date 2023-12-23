@@ -20,7 +20,9 @@ import com.xht.cloud.system.module.permissions.controller.request.SysMenuUpdateR
 import com.xht.cloud.system.module.permissions.controller.response.SysMenuResponse;
 import com.xht.cloud.system.module.permissions.convert.SysMenuConvert;
 import com.xht.cloud.system.module.permissions.dao.dataobject.SysMenuDO;
+import com.xht.cloud.system.module.permissions.dao.dataobject.SysRoleMenuDO;
 import com.xht.cloud.system.module.permissions.dao.mapper.SysMenuMapper;
+import com.xht.cloud.system.module.permissions.dao.mapper.SysRoleMenuMapper;
 import com.xht.cloud.system.module.permissions.dao.wrapper.SysMenuWrapper;
 import com.xht.cloud.system.module.permissions.service.ISysMenuService;
 import com.xht.cloud.system.module.user.controller.response.MetaVo;
@@ -32,11 +34,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * 描述 ：菜单权限
@@ -49,6 +47,8 @@ import java.util.Objects;
 public class SysMenuServiceImpl implements ISysMenuService {
 
     private final SysMenuMapper sysMenuMapper;
+
+    private final SysRoleMenuMapper sysRoleMenuMapper;
 
     private final SysMenuConvert sysMenuConvert;
 
@@ -97,6 +97,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void remove(List<String> ids) {
+        long l = sysMenuMapper.selectCountIn(SysMenuDO::getParentId, ids);
+        long l2 = sysRoleMenuMapper.selectCountIn(SysRoleMenuDO::getMenuId, ids);
+        ExceptionTool.menuValidation(l > 0, "该菜单有子菜单，禁止删除");
+        ExceptionTool.menuValidation(l2 > 0, "该菜单已绑定角色，禁止删除");
         sysMenuMapper.deleteBatchIds(ids);
     }
 

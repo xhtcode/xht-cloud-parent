@@ -14,7 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  **/
 @EnableDiscoveryClient
 @EnableResourceServer
-@EnableFeignClients(basePackages = {"com.xht.cloud"})
+@EnableFeignClients
 @SpringBootApplication
 public class SystemApplication {
 

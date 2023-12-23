@@ -4,6 +4,7 @@ import cn.hutool.captcha.generator.RandomGenerator;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xht.cloud.framework.core.api.response.PageResponse;
 import com.xht.cloud.framework.core.constant.CommonConstants;
@@ -324,12 +325,13 @@ public class SysUserServiceImpl implements ISysUserService {
             throw new RuntimeException("不能设置使用过的密码!");
         }
         String randomGenerator = new RandomGenerator(6).generate();
-        sysUserMapper.update(SysUserWrapper.getInstance().lambdaUpdate()
+        LambdaUpdateWrapper<SysUserDO> eq = SysUserWrapper.getInstance().lambdaUpdate()
                 .set(SysUserDO::getPassWord, passwordEncoder.encode(String.format("%s%s", request.getNewPassword(), randomGenerator)))
                 .set(SysUserDO::getPassWordSalt, randomGenerator)
                 .set(SysUserDO::getPassWordOld, sysUserDO.getPassWordOld())
                 .set(SysUserDO::getPassWordSaltOld, sysUserDO.getPassWordSaltOld())
-                .eq(SysUserDO::getId, sysUserDO.getId()));
+                .eq(SysUserDO::getId, sysUserDO.getId());
+        sysUserMapper.update(eq);
         redisService.delete(RedisKeyTool.createNameTemplate("user:profile:info:{}", userName));
     }
 
