@@ -1,6 +1,7 @@
 package com.xht.cloud.sequence.generate;
 
 import com.xht.cloud.sequence.constant.GenerateIdType;
+import com.xht.cloud.sequence.controller.request.IdRequest;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
@@ -13,9 +14,10 @@ public abstract class GenerateIdHandler implements InitializingBean {
     /**
      * 生成id
      *
+     * @param  request {@link IdRequest}
      * @return id
      */
-    public abstract String generate();
+    public abstract String generate(IdRequest request);
 
     /**
      * 生成id
@@ -25,7 +27,7 @@ public abstract class GenerateIdHandler implements InitializingBean {
     protected abstract GenerateIdType getType();
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("all")
     public void afterPropertiesSet() throws Exception {
         GenerateIdFactory.register(getType(), this);
     }

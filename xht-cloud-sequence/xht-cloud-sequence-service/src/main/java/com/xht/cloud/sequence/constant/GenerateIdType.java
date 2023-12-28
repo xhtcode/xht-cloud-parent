@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 描述 ：
+ * 描述 ：id类型
  *
  * @author : 小糊涂
  **/
@@ -14,7 +14,9 @@ public enum GenerateIdType implements IEnum<Integer> {
 
     UUID(1001, "UUID"),
 
-    SNOWFLAKE(1002, "SnowFlake");
+    SNOWFLAKE(1002, "SnowFlake"),
+
+    SEQUENCE(1003, "自定义序列");
 
     private final Integer value;
 

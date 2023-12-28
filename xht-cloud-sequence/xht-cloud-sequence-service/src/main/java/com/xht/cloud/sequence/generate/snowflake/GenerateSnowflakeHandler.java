@@ -3,13 +3,14 @@ package com.xht.cloud.sequence.generate.snowflake;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import com.xht.cloud.sequence.constant.GenerateIdType;
+import com.xht.cloud.sequence.controller.request.IdRequest;
 import com.xht.cloud.sequence.generate.GenerateIdHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * 描述 ：
+ * 描述 ：生成雪花算法
  *
  * @author : 小糊涂
  **/
@@ -26,7 +27,7 @@ public class GenerateSnowflakeHandler extends GenerateIdHandler {
      * @return id
      */
     @Override
-    public String generate() {
+    public String generate(IdRequest request) {
         return snowflake.nextIdStr();
     }
 

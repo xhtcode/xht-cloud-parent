@@ -58,11 +58,11 @@
     </appender>
     <!--指定类的打印级别-->
     <logger level="INFO" name="com.alibaba.cloud.nacos"/>
-    <logger level="ERROR" name="java.lang.ClassNotFoundException"/>
+    <logger level="INFO" name="java.lang.ClassNotFoundException"/>
     <!-- 多环境配置 按照active profile选择分支 -->
     <springProfile name="dev">
         <!--root节点 全局日志级别，用来指定最基础的日志输出级别-->
-        <root level="debug">
+        <root level="INFO">
             <appender-ref ref="FILE"/>
             <appender-ref ref="CONSOLE"/>
         </root>

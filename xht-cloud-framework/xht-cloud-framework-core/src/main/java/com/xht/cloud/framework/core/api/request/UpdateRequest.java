@@ -12,7 +12,9 @@ import java.io.Serializable;
 @Hidden
 public abstract class UpdateRequest<T> extends Request implements Serializable {
 
-    public abstract String getId();
+    /**
+     * 获取主键
+     */
+    public abstract String getPkId();
 
-    public abstract void setId(T id);
 }

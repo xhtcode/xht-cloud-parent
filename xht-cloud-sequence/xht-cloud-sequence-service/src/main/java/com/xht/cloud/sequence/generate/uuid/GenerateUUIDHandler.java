@@ -1,6 +1,7 @@
 package com.xht.cloud.sequence.generate.uuid;
 
 import com.xht.cloud.sequence.constant.GenerateIdType;
+import com.xht.cloud.sequence.controller.request.IdRequest;
 import com.xht.cloud.sequence.generate.GenerateIdHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 /**
- * 描述 ：
+ * 描述 ：生成uuid
  *
  * @author : 小糊涂
  **/
@@ -24,7 +25,7 @@ public class GenerateUUIDHandler extends GenerateIdHandler {
      * @return id
      */
     @Override
-    public String generate() {
+    public String generate(IdRequest request) {
         return UUID.randomUUID().toString();
     }
 

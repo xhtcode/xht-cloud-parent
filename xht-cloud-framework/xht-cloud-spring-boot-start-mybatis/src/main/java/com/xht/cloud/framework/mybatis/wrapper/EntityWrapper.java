@@ -16,54 +16,54 @@ import java.io.Serializable;
 public interface EntityWrapper<T extends AbstractDO> extends Serializable {
 
     /**
-     * 获取 QueryWrapper&lt;T&gt;
+     * 获取 {@link QueryWrapper }
      *
-     * @return QueryWrapper&lt;T&gt;
+     * @return {@link QueryWrapper }
      */
     default QueryWrapper<T> query() {
         return new QueryWrapper<>();
     }
 
     /**
-     * 获取 LambdaQueryWrapper&lt;T&gt;
+     * 获取 {@link LambdaQueryWrapper }
      *
-     * @return LambdaQueryWrapper&lt;T&gt;
+     * @return {@link LambdaQueryWrapper }
      */
     default LambdaQueryWrapper<T> lambdaQuery() {
         return new LambdaQueryWrapper<>();
     }
 
     /**
-     * 获取 LambdaQueryWrapper&lt;T&gt;
+     * 获取 {@link LambdaQueryWrapper }
      *
      * @param entity 实体类
-     * @return LambdaQueryWrapper&lt;T&gt;
+     * @return {@link LambdaQueryWrapper }
      */
     LambdaQueryWrapper<T> lambdaQuery(T entity);
 
     /**
-     * 获取 UpdateWrapper&lt;T&gt;
+     * 获取 {@link UpdateWrapper }
      *
-     * @return UpdateWrapper&lt;T&gt;
+     * @return {@link UpdateWrapper }
      */
     default UpdateWrapper<T> update() {
         return new UpdateWrapper<>();
     }
 
     /**
-     * 获取 LambdaUpdateWrapper&lt;T&gt;
+     * 获取 {@link LambdaUpdateWrapper }
      *
-     * @return LambdaUpdateWrapper&lt;T&gt;
+     * @return {@link LambdaUpdateWrapper }
      */
     default LambdaUpdateWrapper<T> lambdaUpdate() {
         return new LambdaUpdateWrapper<>();
     }
 
     /**
-     * 获取 LambdaUpdateWrapper&lt;T&gt;
+     * 获取 {@link LambdaUpdateWrapper }
      *
      * @param entity 实体类
-     * @return LambdaUpdateWrapper&lt;T&gt;
+     * @return {@link LambdaUpdateWrapper }
      */
     LambdaUpdateWrapper<T> lambdaUpdate(T entity);
 

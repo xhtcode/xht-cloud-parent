@@ -22,6 +22,10 @@
             <groupId>com.xht.cloud</groupId>
             <artifactId>xht-cloud-spring-boot-start-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.xht.cloud</groupId>
+            <artifactId>xht-cloud-spring-boot-start-mybatis</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
